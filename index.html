@@ -1,7 +1,25 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Scout Evaluation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<h1>Scout Evaluation Form</h1>
+<div>
+    <label>Scout Name: <input type="text" id="scoutName" /></label>
+    <label>Rank:
+        <select id="scoutRank"></select>
+    </label>
+</div>
+
+<form id="evaluationForm">
+    <!-- Categories will be injected here -->
+</form>
+
+<button onclick="calculateScore()">Submit</button>
+<pre id="result"></pre>
+
+<script src="script.js"></script>
 </body>
 </html>
