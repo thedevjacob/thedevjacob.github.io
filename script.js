@@ -76,7 +76,7 @@ function calculateScore() {
     });
 
     const passScore = config.ranks[rank];
-    const resultText = `${total >= passScore ? '✅' : '❌'} Scout: ${name}\nRank: ${rank}\nScore: ${total.toFixed(2)}/${passScore}\nResult: ${total >= passScore ? 'PASS' : 'FAIL'}`;
+    const resultText = `${total >= passScore ? '✅' : '❌'} Scout: ${name}\nRank: ${rank}\nScore: ${total.toFixed(2)}/${passScore.toFixed(2)}\nResult: ${total >= passScore ? 'PASS' : 'FAIL'}`;
 
     resultBox.classList.remove("error");
     resultBox.textContent = resultText;
