@@ -1,13 +1,81 @@
+/* General Styling */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fa;
+    margin: 0;
+    padding: 0;
 }
 
-input, select {
-    margin: 5px;
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Headings */
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Input group styling */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
 }
 
 label {
     display: block;
-    margin: 10px 0;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #444;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Form section styling */
+.form-section {
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* Button styling */
+button {
+    margin-top: 20px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Result box */
+#result {
+    margin-top: 30px;
+    text-align: left;
+    background-color: #e9f5ff;
+    padding: 15px;
+    border-left: 4px solid #007BFF;
+    border-radius: 6px;
+    white-space: pre-wrap;
+    color: #222;
+    font-family: monospace;
 }

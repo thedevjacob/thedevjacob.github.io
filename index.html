@@ -5,20 +5,24 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Scout Evaluation Form</h1>
-<div>
-    <label>Scout Name: <input type="text" id="scoutName" /></label>
-    <label>Rank:
-        <select id="scoutRank"></select>
-    </label>
+<div class="container">
+    <h1>Scout Evaluation Form</h1>
+
+    <div class="input-group">
+        <label>Scout Name: <input type="text" id="scoutName" /></label>
+        <label>Rank:
+            <select id="scoutRank"></select>
+        </label>
+    </div>
+
+    <form id="evaluationForm" class="form-section">
+        <!-- Categories will be injected here -->
+    </form>
+
+    <button onclick="calculateScore()">Submit</button>
+
+    <pre id="result"></pre>
 </div>
-
-<form id="evaluationForm">
-    <!-- Categories will be injected here -->
-</form>
-
-<button onclick="calculateScore()">Submit</button>
-<pre id="result"></pre>
 
 <script src="script.js"></script>
 </body>
