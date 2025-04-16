@@ -13,14 +13,14 @@ function createForm() {
     for (const rank in config.ranks) {
         const option = document.createElement('option');
         option.value = rank;
-        option.textContent = rank;
+        option.textContent = `${rank} (${config.ranks[rank]}+ to pass)`;
         rankSelect.appendChild(option);
     }
 
     // Create input fields for each category
     for (const category in config.categories) {
         const label = document.createElement('label');
-        label.textContent = `${category} (0-10):`;
+        label.textContent = `${category}:`;
         const input = document.createElement('input');
         input.type = 'number';
         input.min = 0;
