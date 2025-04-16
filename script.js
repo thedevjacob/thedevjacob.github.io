@@ -18,7 +18,7 @@ function createForm() {
     }
 
     // Create input fields for each category
-    for (const category in config.categories) {
+    for (const category in config.eval_eval_categories) {
         const label = document.createElement('label');
         label.textContent = `${category}:`;
         const input = document.createElement('input');
@@ -37,6 +37,9 @@ function calculateScore() {
     const rank = document.getElementById('scoutRank').value;
     const inputs = document.querySelectorAll('#evaluationForm input');
     const resultBox = document.getElementById('result');
+    const adultNames = document.querySelectorAll('.adult-name');
+    const adultRatings = document.querySelectorAll('.adult-rating');
+
     let errors = [];
 
     // Error: Empty scout name
@@ -59,6 +62,32 @@ function calculateScore() {
         }
     });
 
+    // Validate adult ratings
+    let adultTotal = 0;
+    let numAdults = 0;
+    for (let i = 0; i < adultRatings.length; i++) {
+        const name = adultNames[i].value.trim();
+        const val = adultRatings[i].value.trim();
+
+        if (name === '' || val === '') {
+            errors.push(`Adult ${i + 1} is incomplete.`);
+            continue;
+        }
+
+        const score = parseFloat(val);
+        if (isNaN(score) || score < 0 || score > 10) {
+            errors.push(`Adult ${i + 1} rating must be between 0 and 10.`);
+            continue;
+        }
+
+        adultTotal += score;
+        numAdults++;
+    }
+
+    if (numAdults === 0) {
+        errors.push("At least one adult rating is required.");
+    }
+
     // If any errors, show them in red
     if (errors.length > 0) {
         resultBox.classList.add("error");
@@ -66,19 +95,54 @@ function calculateScore() {
         return;
     }
 
-    // All good — calculate score
+    // All good — calculate category-based score
     let total = 0;
     inputs.forEach(input => {
         const cat = input.dataset.category;
         const score = parseFloat(input.value);
-        const weight = config.categories[cat];
-        total += score * weight * 10; // scale to 100
+        const weight = config.eval_categories[cat];
+        total += score * weight * 10; // category contribution
     });
 
+    // Calculate adult weight contribution
+    const adultWeightTotal = 1.38;
+    const perAdultWeight = adultWeightTotal / numAdults;
+    const weightedAdultScore = adultTotal * perAdultWeight;
+
+    // Add adult contribution
+    total += weightedAdultScore * 10;
+
+    // Final pass/fail comparison
     const passScore = config.ranks[rank];
-    const resultText = `${total >= passScore ? '✅' : '❌'} Scout: ${name}\nRank: ${rank}\nScore: ${total.toFixed(2)}/${passScore.toFixed(2)}\nResult: ${total >= passScore ? 'PASS' : 'FAIL'}`;
+    const resultText = `${total >= passScore ? '✅' : '❌'} Scout: ${name}
+Rank: ${rank}
+Score: ${total.toFixed(2)} / ${passScore.toFixed(2)}
+Result: ${total >= passScore ? 'PASS' : 'FAIL'}`;
 
     resultBox.classList.remove("error");
     resultBox.textContent = resultText;
 }
+
+function addAdult() {
+    const container = document.getElementById('adultsContainer');
+    const wrapper = document.createElement('div');
+    wrapper.className = 'adult-entry';
+
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.placeholder = 'Adult Name';
+    nameInput.className = 'adult-name';
+
+    const ratingInput = document.createElement('input');
+    ratingInput.type = 'number';
+    ratingInput.placeholder = 'Rating (1-10)';
+    ratingInput.min = 1;
+    ratingInput.max = 10;
+    ratingInput.className = 'adult-rating';
+
+    wrapper.appendChild(nameInput);
+    wrapper.appendChild(ratingInput);
+    container.appendChild(wrapper);
+}
+
 

@@ -95,4 +95,16 @@ button:hover {
     font-family: monospace;
 }
 
+#adultsSection {
+    margin-top: 30px;
+}
+
+#adultsSection h3 {
+    margin-bottom: 10px;
+}
+
+#adultsContainer label {
+    margin-bottom: 10px;
+    display: block;
+}
 

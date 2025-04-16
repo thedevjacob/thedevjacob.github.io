@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <title>Scout Evaluation</title>
-    <link rel="stylesheet" href="style.css?v=1.0.6">
+    <link rel="stylesheet" href="style.css?v=1.1.0">
 </head>
 <body>
-<div id="version">v1.0.6</div>
+<div id="version">v1.1.0</div>
 <div class="container">
     <h1>Scout Evaluation Form</h1>
 
@@ -19,6 +19,12 @@
     <form id="evaluationForm" class="form-section">
         <!-- Categories will be injected here -->
     </form>
+
+    <div class="form-section" id="adultsSection">
+        <h3>Adult Evaluations</h3>
+        <div id="adultsContainer"></div>
+        <button type="button" onclick="addAdult()">+ Add Adult</button>
+    </div>
 
     <button onclick="calculateScore()">Submit</button>
 
