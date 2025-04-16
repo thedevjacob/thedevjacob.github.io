@@ -71,11 +71,18 @@ button:hover {
 #result {
     margin-top: 30px;
     text-align: left;
-    background-color: #e9f5ff;
     padding: 15px;
     border-left: 4px solid #007BFF;
+    background-color: #e9f5ff;
     border-radius: 6px;
     white-space: pre-wrap;
     color: #222;
     font-family: monospace;
 }
+
+#result.error {
+    border-left-color: #FF4C4C;
+    background-color: #ffecec;
+    color: #b00000;
+}
+

@@ -33,11 +33,41 @@ function createForm() {
 }
 
 function calculateScore() {
-    const name = document.getElementById('scoutName').value;
+    const name = document.getElementById('scoutName').value.trim();
     const rank = document.getElementById('scoutRank').value;
     const inputs = document.querySelectorAll('#evaluationForm input');
-    let total = 0;
+    const resultBox = document.getElementById('result');
+    let errors = [];
 
+    // Error: Empty scout name
+    if (name === '') {
+        errors.push("Scout Name is empty.");
+    }
+
+    // Validate category inputs
+    inputs.forEach(input => {
+        const cat = input.dataset.category;
+        const value = input.value.trim();
+
+        if (value === '') {
+            errors.push(`${cat} is empty.`);
+        } else {
+            const num = parseFloat(value);
+            if (isNaN(num) || num < 0 || num > 10) {
+                errors.push(`${cat} must be a number between 0 and 10.`);
+            }
+        }
+    });
+
+    // If any errors, show them in red
+    if (errors.length > 0) {
+        resultBox.classList.add("error");
+        resultBox.textContent = "⚠️ Errors:\n" + errors.join('\n');
+        return;
+    }
+
+    // All good — calculate score
+    let total = 0;
     inputs.forEach(input => {
         const cat = input.dataset.category;
         const score = parseFloat(input.value);
@@ -46,7 +76,9 @@ function calculateScore() {
     });
 
     const passScore = config.ranks[rank];
-    const resultText = `Scout: ${name}\nRank: ${rank}\nScore: ${total.toFixed(2)}\nResult: ${total >= passScore ? 'PASS' : 'FAIL'}`;
+    const resultText = `✅ Scout: ${name}\nRank: ${rank}\nScore: ${total.toFixed(2)}\nResult: ${total >= passScore ? 'PASS' : 'FAIL'}`;
 
-    document.getElementById('result').textContent = resultText;
+    resultBox.classList.remove("error");
+    resultBox.textContent = resultText;
 }
+
