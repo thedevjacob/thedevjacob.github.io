@@ -50,7 +50,7 @@ function calculateScore() {
         const value = input.value.trim();
 
         if (value === '') {
-            errors.push(`${cat} is empty.`);
+            errors.push(`${cat} category is empty.`);
         } else {
             const num = parseFloat(value);
             if (isNaN(num) || num < 0 || num > 10) {
@@ -76,7 +76,7 @@ function calculateScore() {
     });
 
     const passScore = config.ranks[rank];
-    const resultText = `✅ Scout: ${name}\nRank: ${rank}\nScore: ${total.toFixed(2)}\nResult: ${total >= passScore ? 'PASS' : 'FAIL'}`;
+    const resultText = `${total >= passScore ? '✅' : '❌'} Scout: ${name}\nRank: ${rank}\nScore: ${total.toFixed(2)}/${passScore}\nResult: ${total >= passScore ? 'PASS' : 'FAIL'}`;
 
     resultBox.classList.remove("error");
     resultBox.textContent = resultText;
