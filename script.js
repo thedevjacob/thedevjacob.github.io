@@ -35,7 +35,7 @@ function createForm() {
 function calculateScore() {
     const name = document.getElementById('scoutName').value.trim();
     const rank = document.getElementById('scoutRank').value;
-    const inputs = document.querySelectorAll('#evaluationForm input[data-category]'); // ✅ Fixed
+    const inputs = document.querySelectorAll('#evaluationForm input[data-category]');
     const resultBox = document.getElementById('result');
     const adultNames = document.querySelectorAll('.adult-name');
     const adultRatings = document.querySelectorAll('.adult-rating');
@@ -116,7 +116,8 @@ function calculateScore() {
         total += score * perAdultWeight;
     });
 
-    const finalScore = (total / weightSum) * 100;
+    // Final score is on a 0–10 scale, convert to 0–100 for display
+    const finalScore = (total / weightSum) * 10;
     const passScore = config.ranks[rank];
 
     const resultText = `${finalScore >= passScore ? '✅' : '❌'} Scout: ${name}
