@@ -107,6 +107,12 @@ button:hover {
     margin-bottom: 10px;
     display: block;
 }
+.adult-entry {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
 
 .remove-adult-btn {
     margin-left: 10px;
