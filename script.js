@@ -95,29 +95,38 @@ function calculateScore() {
         return;
     }
 
-    // All good — calculate category-based score
+    // Calculate weighted sum and total weight
     let total = 0;
+    let weightSum = 0;
+
+// Category-based score
     inputs.forEach(input => {
         const cat = input.dataset.category;
         const score = parseFloat(input.value);
         const weight = config.eval_categories[cat];
-        total += score * weight * 10; // category contribution
+        total += score * weight;
+        weightSum += weight;
     });
 
-    // Calculate adult weight contribution
+// Adult contribution
     const adultWeightTotal = 1.38;
     const perAdultWeight = adultWeightTotal / numAdults;
-    const weightedAdultScore = adultTotal * perAdultWeight;
+    weightSum += adultWeightTotal;
 
-    // Add adult contribution
-    total += weightedAdultScore * 10;
+    adultRatings.forEach((input, i) => {
+        const score = parseFloat(adultRatings[i].value);
+        total += score * perAdultWeight;
+    });
 
-    // Final pass/fail comparison
+// Final scaled score
+    const finalScore = (total / weightSum) * 100;
+
+// Final pass/fail comparison
     const passScore = config.ranks[rank];
-    const resultText = `${total >= passScore ? '✅' : '❌'} Scout: ${name}
+    const resultText = `${finalScore >= passScore ? '✅' : '❌'} Scout: ${name}
 Rank: ${rank}
-Score: ${total.toFixed(2)} / ${passScore.toFixed(2)}
-Result: ${total >= passScore ? 'PASS' : 'FAIL'}`;
+Score: ${finalScore.toFixed(2)} / ${passScore.toFixed(2)}
+Result: ${finalScore >= passScore ? 'PASS' : 'FAIL'}`;
 
     resultBox.classList.remove("error");
     resultBox.textContent = resultText;
