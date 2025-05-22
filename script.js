@@ -151,4 +151,80 @@ function addAdult() {
     container.appendChild(wrapper);
 }
 
+// ==== Download Report Functionality ====
 
+function generateReport() {
+    const name = document.getElementById('scoutName').value.trim();
+    const rank = document.getElementById('scoutRank').value;
+    const inputs = document.querySelectorAll('#evaluationForm input[data-category]');
+    const adultNames = document.querySelectorAll('.adult-name');
+    const adultRatings = document.querySelectorAll('.adult-rating');
+
+    let report = `Scout Evaluation Report\n=======================\n`;
+    report += `Name: ${name}\n`;
+    report += `Rank: ${rank}\n\n`;
+    report += `Category Scores:\n`;
+
+    inputs.forEach(input => {
+        const cat = input.dataset.category;
+        const score = input.value.trim();
+        report += `  ${cat}: ${score}\n`;
+    });
+
+    report += `\nAdult Evaluations:\n`;
+    for (let i = 0; i < adultRatings.length; i++) {
+        const aName = adultNames[i].value.trim();
+        const score = adultRatings[i].value.trim();
+        report += `  ${aName}: ${score}\n`;
+    }
+
+    // Final score (reuse same logic)
+    let total = 0;
+    let weightSum = 0;
+
+    inputs.forEach(input => {
+        const cat = input.dataset.category;
+        const score = parseFloat(input.value);
+        const weight = config.eval_categories[cat];
+        total += score * weight;
+        weightSum += weight;
+    });
+
+    const adultWeightTotal = 1.38;
+    const perAdultWeight = adultWeightTotal / adultRatings.length;
+    weightSum += adultWeightTotal;
+
+    adultRatings.forEach(input => {
+        const score = parseFloat(input.value);
+        total += score * perAdultWeight;
+    });
+
+    const finalScore = (total / weightSum) * 10;
+    const passScore = config.ranks[rank];
+
+    report += `\nFinal Score: ${finalScore.toFixed(2)} / ${passScore.toFixed(2)}\n`;
+    report += `Result: ${finalScore >= passScore ? 'PASS ✅' : 'FAIL ❌'}\n`;
+
+    return report;
+}
+
+function downloadTextFile(filename, text) {
+    const blob = new Blob([text], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', () => {
+            const report = generateReport();
+            const name = document.getElementById('scoutName').value.trim() || "scout";
+            const rank = document.getElementById('scoutRank').value;
+            const fileName = `${name}_${rank}_Evaluation.txt`;
+            downloadTextFile(fileName, report);
+        });
+    }
+});
