@@ -160,7 +160,10 @@ function generateReport() {
     const adultNames = document.querySelectorAll('.adult-name');
     const adultRatings = document.querySelectorAll('.adult-rating');
 
-    let report = `Scout Evaluation Report\n=======================\n`;
+    const today = new Date();
+    const dateStr = `${today.getMonth() + 1}.${today.getDate()}.${today.getFullYear()}`;
+    let report = `Scout Evaluation Report\n=======================\nDate: ${dateStr}\n`;
+
     report += `Name: ${name}\n`;
     report += `Rank: ${rank}\n\n`;
     report += `Category Scores:\n`;
@@ -223,7 +226,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const report = generateReport();
             const name = document.getElementById('scoutName').value.trim() || "scout";
             const rank = document.getElementById('scoutRank').value;
-            const fileName = `${name}_${rank}_Evaluation.txt`;
+
+            const today = new Date();
+            const dateStr = `${today.getMonth() + 1}.${today.getDate()}.${today.getFullYear()}`;
+            const fileName = `${dateStr} - ${name}_${rank}_Evaluation.txt`;
+
             downloadTextFile(fileName, report);
         });
     }
