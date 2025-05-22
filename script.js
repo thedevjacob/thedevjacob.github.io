@@ -18,7 +18,7 @@ function createForm() {
     }
 
     // Create input fields for each category
-    for (const category in config.eval_eval_categories) {
+    for (const category in config.eval_categories) {
         const label = document.createElement('label');
         label.textContent = `${category}:`;
         const input = document.createElement('input');
