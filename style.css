@@ -108,3 +108,16 @@ button:hover {
     display: block;
 }
 
+.remove-adult-btn {
+    margin-left: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.remove-adult-btn:hover {
+    background-color: #cc0000;
+}

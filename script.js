@@ -146,8 +146,15 @@ function addAdult() {
     ratingInput.max = 10;
     ratingInput.className = 'adult-rating';
 
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.textContent = 'Remove';
+    removeBtn.className = 'remove-adult-btn';
+    removeBtn.onclick = () => container.removeChild(wrapper);
+
     wrapper.appendChild(nameInput);
     wrapper.appendChild(ratingInput);
+    wrapper.appendChild(removeBtn);
     container.appendChild(wrapper);
 }
 
