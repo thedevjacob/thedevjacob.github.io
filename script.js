@@ -35,14 +35,14 @@ function createForm() {
 function calculateScore() {
     const name = document.getElementById('scoutName').value.trim();
     const rank = document.getElementById('scoutRank').value;
-    const inputs = document.querySelectorAll('#evaluationForm input');
+    const inputs = document.querySelectorAll('#evaluationForm input[data-category]'); // ✅ Fixed
     const resultBox = document.getElementById('result');
     const adultNames = document.querySelectorAll('.adult-name');
     const adultRatings = document.querySelectorAll('.adult-rating');
 
     let errors = [];
 
-    // Error: Empty scout name
+    // Validate name
     if (name === '') {
         errors.push("Scout Name is empty.");
     }
@@ -62,14 +62,14 @@ function calculateScore() {
         }
     });
 
-    // Validate adult ratings
+    // Validate adult inputs
     let adultTotal = 0;
     let numAdults = 0;
     for (let i = 0; i < adultRatings.length; i++) {
-        const name = adultNames[i].value.trim();
+        const aName = adultNames[i].value.trim();
         const val = adultRatings[i].value.trim();
 
-        if (name === '' || val === '') {
+        if (aName === '' || val === '') {
             errors.push(`Adult ${i + 1} is incomplete.`);
             continue;
         }
@@ -88,18 +88,16 @@ function calculateScore() {
         errors.push("At least one adult rating is required.");
     }
 
-    // If any errors, show them in red
     if (errors.length > 0) {
         resultBox.classList.add("error");
         resultBox.textContent = "⚠️ Errors:\n" + errors.join('\n');
         return;
     }
 
-    // Calculate weighted sum and total weight
+    // Calculate weighted scores
     let total = 0;
     let weightSum = 0;
 
-// Category-based score
     inputs.forEach(input => {
         const cat = input.dataset.category;
         const score = parseFloat(input.value);
@@ -108,7 +106,7 @@ function calculateScore() {
         weightSum += weight;
     });
 
-// Adult contribution
+    // Add adult weight
     const adultWeightTotal = 1.38;
     const perAdultWeight = adultWeightTotal / numAdults;
     weightSum += adultWeightTotal;
@@ -118,11 +116,9 @@ function calculateScore() {
         total += score * perAdultWeight;
     });
 
-// Final scaled score
     const finalScore = (total / weightSum) * 100;
-
-// Final pass/fail comparison
     const passScore = config.ranks[rank];
+
     const resultText = `${finalScore >= passScore ? '✅' : '❌'} Scout: ${name}
 Rank: ${rank}
 Score: ${finalScore.toFixed(2)} / ${passScore.toFixed(2)}
