@@ -117,7 +117,7 @@ function calculateScore() {
     });
 
     // Final score is on a 0–10 scale, convert to 0–100 for display
-    const finalScore = (total / weightSum) * 10;
+    const finalScore = (total / weightSum);
     const passScore = config.ranks[rank];
 
     const resultText = `${finalScore >= passScore ? '✅' : '❌'} Scout: ${name}
